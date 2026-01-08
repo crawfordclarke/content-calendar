@@ -3,10 +3,9 @@ package com.crawford.content_calendar.controller;
 
 import com.crawford.content_calendar.model.Content;
 import com.crawford.content_calendar.repository.ContentRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +31,26 @@ public class ContentController {
         return contentRepository.findById(id);
 
     }
+    @PostMapping
+    public void save(@RequestBody Content content) {
+        contentRepository.create(content);
+    }
 
+    @PutMapping("/{id}")
+    public void update(@PathVariable Integer id,@RequestBody Content content) {
+        if(!contentRepository.findById(id).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found");
+        }
+        contentRepository.update(content);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
+        if(!contentRepository.findById(id).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found");
+        }
+        contentRepository.delete(id);
+
+    }
 
 }

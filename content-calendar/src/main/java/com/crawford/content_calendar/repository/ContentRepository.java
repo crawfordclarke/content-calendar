@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.web.servlet.function.RequestPredicates.param;
+
 @Repository
 public class ContentRepository {
 
@@ -47,4 +49,41 @@ public class ContentRepository {
                 .optional();
 
     }
+
+    public void create(Content content) {
+        this.jdbcClient.sql("INSERT INTO Content (title, description, status, content_type, date_created, url) VALUES (:title, :description, :status, :content_type, :date_created, :url)")
+                .param("title", content.title())
+                .param("description", content.description())
+                .param("status", content.status().name())
+                .param("content_type", content.contentType().name())
+                .param("date_created", content.dateCreated())
+                .param("url", content.url())
+                .update();
+
+
+    }
+
+    public void update(Content content) {
+        this.jdbcClient.sql("UPDATE Content SET id = :id, title=:title, description=:description, status=:status, content_type=:content_type, date_created =:date_created, url =:url WHERE id = :id")
+                .param("id", content.id())
+                .param("title", content.title())
+                .param("description", content.description())
+                .param("status", content.status().name())
+                .param("content_type", content.contentType().name())
+                .param("date_created", content.dateCreated())
+                .param("url", content.url())
+                .update();
+    }
+
+    public void delete(int id) {
+        this.jdbcClient.sql("DELETE FROM Content WHERE id = :id")
+                .param("id",id)
+                .update();
+    }
+
+
 }
+
+
+
+

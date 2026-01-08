@@ -1,0 +1,34 @@
+http://localhost:8080/api/content
+
+### Create new content
+POST http://localhost:8080/api/content
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "My Second Blog Post",
+  "description": "Testing the POST request",
+  "status": "IDEA",
+  "contentType": "ARTICLE",
+  "dateCreated": "2026-01-08T19:00:00",
+  "dateUpdated": null,
+  "url": ""
+}
+
+### Update existing content
+PUT http://localhost:8080/api/content/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "MY FIRST POST UPDATED!",
+  "description": "Tests are fun",
+  "status": "IDEA",
+  "contentType": "ARTICLE",
+  "dateCreated": "2026-01-08T19:00:00",
+  "dateUpdated": "2026-01-08T19:05:00",
+  "url": "http://localhost:8080/my-first-blog-post"
+}
+
+### Delete content
+DELETE http://localhost:8080/api/content/2
