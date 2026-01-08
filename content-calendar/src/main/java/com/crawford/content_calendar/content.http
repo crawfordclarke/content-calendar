@@ -32,3 +32,19 @@ Content-Type: application/json
 
 ### Delete content
 DELETE http://localhost:8080/api/content/2
+
+###
+POST http://localhost:8080/api/content
+Content-Type: application/json
+
+{
+  "id": 9,
+  "title": "",
+  "description": "Testing the validation",
+  "status": "IDEA",
+  "contentType": "ARTICLE",
+  "dateCreated": "2026-01-08T19:00:00",
+  "dateUpdated": null,
+  "url": ""
+}
+
