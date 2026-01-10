@@ -20,9 +20,7 @@ import static org.springframework.web.servlet.function.RequestPredicates.param;
 // Repository for interacting with the Content table using JdbcClient
 @Repository
 public interface ContentRepository extends ListCrudRepository<Content, Integer> {
-
-
-
+    List<Content> findAllByStatus(Status status);
 
 }
 
