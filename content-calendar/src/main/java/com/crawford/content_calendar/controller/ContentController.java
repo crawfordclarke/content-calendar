@@ -45,7 +45,7 @@ public class ContentController {
     // POST method for creating new blog posts
     @PostMapping
     public void save(@RequestBody @Valid Content content) {
-        contentRepository.create(content);
+        contentRepository.save(content);
     }
 
 
@@ -53,10 +53,18 @@ public class ContentController {
     @PutMapping("/{id}")
     public void update(@PathVariable Integer id,@RequestBody @Valid Content content) {
         // Ensure resource exists before attempting update
-        if(!contentRepository.findById(id).isPresent()) {
+        if(!contentRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found");
         }
-        contentRepository.update(content);
+        content = new Content(id,
+                content.title(),
+                content.description(),
+                content.status(),
+                content.contentType(),
+                content.dateCreated(),
+                content.dateUpdated(),
+                content.url());
+        contentRepository.save(content);
     }
 
 
@@ -64,10 +72,10 @@ public class ContentController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         // Ensure resource exists before attempting delete
-        if(!contentRepository.findById(id).isPresent()) {
+        if(!contentRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found");
         }
-        contentRepository.delete(id);
+        contentRepository.deleteById(id);
 
     }
 
